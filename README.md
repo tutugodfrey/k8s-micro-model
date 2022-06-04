@@ -40,7 +40,16 @@ source .devops/bin/activate
 
 1. Standalone:  `python app.py`
 2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+3. Upload Docker image to docker registry: `./upload_docker.sh`
+4. Run in Kubernetes:  `./run_kubernetes.sh`
+5. Make prediction with a running app: `./make_prediction.sh` (This can be use both for docker and kubernetes)
+
+
+# Other files and their functions
+1. Directory containing the trained model we are using for prediction `model_data` (This is also copied into the docker container)
+2. Dockerfile to containerize the application: `Dockerfile`
+6. Sample Output of running docker container and making prediction: `cat docker_out.txt`
+7. Sample output of running kubernetes and making prediction: `cat kubernetes_out.txt`
 
 ### Kubernetes Steps
 
@@ -50,7 +59,9 @@ source .devops/bin/activate
 * Run via kubectl
 
 
-# Procedure
+# Python virtual environment
+
+You can also setup python virtual environment with the following two commands.
 
 ```bash
 python3 -m venv ~/.devops
@@ -60,7 +71,7 @@ python3 -m venv ~/.devops
 source ~/.devops/bin/activate
 ```
 
-Install hadolint
+# Install hadolint
 
 ```bash
 sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
@@ -70,20 +81,33 @@ sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/downloa
 sudo chmod +x /bin/hadolint
 ```
 
-build docker image, run a container
+# build docker image, run a container
 
 ```bash
 ./run_docker.shc9
-
+```
 If the above is successful, make a prediction
 
 ```bash
 ./make_prediction.sh 
 ```
 
-To Log the container
+# To Log the container
 
 ```bash
 docker logs -f container-name-here
 ```
 
+# Environment variables
+You can set all of this environment variable to override those set in the scripts
+
+**IMAGE_REPO=**: Your docker registry
+**IMAGE_NAME=**: name of the image to create
+**IMAGE_TAG=**: Tag to creae
+**IMAGE_PORT=**: Port exposed in Dockerfile
+**CONTAINER_NAME=**: Name of the docker container to create (when running `run_docker.sh`)
+**CONTAINER_PORT=**: Port to map to the docker container
+**DEPLOYMENT_NAME=**: Name of the deployment to create
+
+**NOTE:**
+The scripts used in this project assume some default environment variables that can be overriden by setting your own environment variables that follows the naming in the scripts. If done properly, you should be able to execute the scripts without editing them. Please make sure you are consistent with the variable names across the scripts to avoid getting errors.
