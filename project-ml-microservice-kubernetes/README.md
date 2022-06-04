@@ -48,3 +48,42 @@ source .devops/bin/activate
 * Setup and Configure Kubernetes locally
 * Create Flask app in Container
 * Run via kubectl
+
+
+# Procedure
+
+```bash
+python3 -m venv ~/.devops
+```
+
+```bash
+source ~/.devops/bin/activate
+```
+
+Install hadolint
+
+```bash
+sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64
+```
+
+```bash
+sudo chmod +x /bin/hadolint
+```
+
+build docker image, run a container
+
+```bash
+./run_docker.shc9
+
+If the above is successful, make a prediction
+
+```bash
+./make_prediction.sh 
+```
+
+To Log the container
+
+```bash
+docker logs -f container-name-here
+```
+

@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-PORT=8000
+ 
+if [ -z $CONTAINER_PORT ]; then
+ CONTAINER_PORT=8000
+fi
+
+PORT=$CONTAINER_PORT
+
 echo "Port: $PORT"
 
 # POST method predict
